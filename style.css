@@ -48,3 +48,7 @@ footer {
   grid-column: 1/5;
   grid-row: 5/6;
 }
+img {
+  max-height: 250px;
+  max-width: 210px;
+}
