@@ -1,0 +1,50 @@
+body {
+  width: 960px;
+  height: 760px;
+}
+main {
+  background-color: ;
+  display: grid;
+  grid-template-rows: 100px 260px 100px 200px 100px;
+  grid-template-columns: 300px repeat(3, 220px);
+}
+header {
+  background-color: lightcoral;
+  grid-column: 1/6;
+  grid-row: 1/2;
+}
+.column-panel {
+  background-color: lightgreen;
+  grid-column: 1/2;
+  grid-row: 2/5;
+}
+.image-left {
+  background-color: lightgrey;
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
+.image-middle {
+  background-color: lightyellow;
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+.image-right {
+  background-color: lightpink;
+  grid-column: 4/5;
+  grid-row: 2/3;
+}
+.empty-row {
+  background-color: lightslategray;
+  grid-column: 2/5;
+  grid-row: 3/4;
+}
+.description-row {
+  background-color: lightseagreen;
+  grid-column: 2/5;
+  grid-row: 4/5;
+}
+footer {
+  background-color: lightcoral;
+  grid-column: 1/5;
+  grid-row: 5/6;
+}
