@@ -72,17 +72,18 @@ function renderAllProduct(randomLeft,randomMiddle,randomRight) {
 
 
 function eventHandler(event) {
+  console.log(event);
   if(event.target === leftImageEl || event.target === middleImageEl || event.target === rightImageEl) {
     rounds--;
   }
   if(event.target === leftImageEl) {
-    this.timesChosen++
+    product.timesChosen++;
   } 
-  else if (event.target === middleImageEl) {
-    this.timesChosen++
+  if (event.target === middleImageEl) {
+    product.timesChosen++;
   }
-  else if (event.target === rightImageEl) {
-    this.timesChosen++
+  if (event.target === rightImageEl) {
+    product.timesChosen++;
   }
   
   if (rounds === 0) {
@@ -115,7 +116,7 @@ function renderTable() {
   ulEl.innerHTML = '';
   for (product of product.allProductsArray) {
     const liEl = document.createElement('li')
-    liEl.textContent = `${product.name} had ${product.timesChosen} clicks and was shown ${product.timesShown} times.`
+    liEl.textContent = `${product.name} had ${this.timesChosen} clicks and was shown ${product.timesShown} times.`
     ulEl.appendChild(liEl);
   }
 }
