@@ -14,15 +14,56 @@ let middleIndex = null;
 let rightIndex = null;
 let leftIndex = null;
 
-let rounds = 25
+let rounds = 10
 
 var ctx = document.getElementById('my-canvas').getContext('2d');
 
 
-console.log(chartName)
+function renderChart() {
+  renderChosen = [];
+  renderLabels = []
+console.log(Product.allProductsArray)
+  for(let product of Product.allProductsArray) {
+    renderChosen.push(product.timesChosen);
+    renderLabels.push(product.name);
+  }
 
-// ---------------------------------------------------- Constructor Functions -------------------------------------------------------------//
-function product(name,image) {
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: renderLabels,
+      datasets: [{
+        label: [],
+        data: renderChosen,
+        backgroundColor: [
+          'red', 'orange', 'yellow', 'green', 'blue', 'purple','green','teal', 'grey', 'turquoise', 'violet', 'maroon', 'aqua', 'brown', 'tan', 'beige', 'bisque', 'salmon','black'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+  
+  
+  
+  
+  // ---------------------------------------------------- Constructor Functions -------------------------------------------------------------//
+  function Product(name,image) {
   this.name = name;
   this.image = image;
   this.timesShown = 0;
@@ -30,14 +71,14 @@ function product(name,image) {
 }
 
 // ---------------------------------------------------- Prototypes ------------------------------------------------------------------------//
-product.prototype.renderproduct = function(h2, img) {
+Product.prototype.renderproduct = function(h2, img) {
   h2.textContent = this.name;
   img.src = this.image;
   this.timesShown++;
 }
 
 
-product.allProductsArray = [];
+Product.allProductsArray = [];
 
 
 // ---------------------------------------------------- Global Functions --------------------------------------------------------------//
@@ -50,23 +91,23 @@ function randomObject() {
   for (let i = 0; i < 3; i++) {
   
     while (previouslyShown.includes(leftIndex) || leftIndex === middleIndex || leftIndex === rightIndex) {
-    leftIndex = Math.floor(Math.random() * product.allProductsArray.length);
+    leftIndex = Math.floor(Math.random() * Product.allProductsArray.length);
    }
     previouslyShown.push(leftIndex);
   
     while (previouslyShown.includes(middleIndex) || middleIndex === leftIndex || middleIndex === rightIndex) {
-    middleIndex = Math.floor(Math.random() * product.allProductsArray.length);
+    middleIndex = Math.floor(Math.random() * Product.allProductsArray.length);
     }
     previouslyShown.push(middleIndex);
   
     while(previouslyShown.includes(rightIndex) || rightIndex === middleIndex || rightIndex === leftIndex) {
-    rightIndex = Math.floor(Math.random() * product.allProductsArray.length);
+    rightIndex = Math.floor(Math.random() * Product.allProductsArray.length);
     }
     previouslyShown.push(rightIndex);
   }
-    let randomLeft = product.allProductsArray[leftIndex]
-    let randomMiddle = product.allProductsArray[middleIndex]
-    let randomRight = product.allProductsArray[rightIndex]
+    let randomLeft = Product.allProductsArray[leftIndex]
+    let randomMiddle = Product.allProductsArray[middleIndex]
+    let randomRight = Product.allProductsArray[rightIndex]
 
     renderAllProduct(randomLeft,randomMiddle,randomRight);
 }  
@@ -81,20 +122,20 @@ function renderAllProduct(randomLeft,randomMiddle,randomRight) {
 function eventHandler(event) {
   if (rounds === 0) {
     imageContainerEl.removeEventListener('click', eventHandler);
+
   }
   if(event.target === leftImageEl) {
-    product.allProductsArray[leftIndex].timesChosen++;
-    console.log(product.leftIndex)
+    Product.allProductsArray[leftIndex].timesChosen++;
     rounds--;
   } 
 
   if (event.target === middleImageEl) {
-    product.allProductsArray[middleIndex].timesChosen++;
+    Product.allProductsArray[middleIndex].timesChosen++;
     rounds--;
     console.log('test click mid')
   }
   if (event.target === rightImageEl) {
-    product.allProductsArray[rightIndex].timesChosen++;
+    Product.allProductsArray[rightIndex].timesChosen++;
     rounds--;
     console.log('test click right')
     
@@ -108,6 +149,7 @@ function eventHandler(event) {
 
 function buttonEvent(event) {
   if (event.target === viewButton) {
+    renderChart();
     renderTable();
     viewButton.removeEventListener('click', buttonEvent)
   }
@@ -118,12 +160,15 @@ function buttonEvent(event) {
 function renderTable() {
   const ulEl = document.getElementById('click-results')
   ulEl.innerHTML = '';
-  for (product of product.allProductsArray) {
+  for (let product of Product.allProductsArray) {
     const liEl = document.createElement('li')
     liEl.textContent = `${product.name} had ${product.timesChosen} clicks and was shown ${product.timesShown} times.`
     ulEl.appendChild(liEl);
   }
 }
+
+
+
 
 //  --------------------------------------------------- Listeners -------------------------------------------------------------------------//
 
@@ -133,24 +178,24 @@ viewButton.addEventListener('click', buttonEvent);
 
 // ---------------------------------------------------- Function Calls --------------------------------------------------------------------//
 
-product.allProductsArray.push(new product('bag', 'assets/bag.jpg'));
-product.allProductsArray.push(new product('banana', 'assets/banana.jpg'));
-product.allProductsArray.push(new product('bathroom', 'assets/bathroom.jpg'));
-product.allProductsArray.push(new product('boots', 'assets/boots.jpg'));
-product.allProductsArray.push(new product('breakfast', 'assets/breakfast.jpg'));
-product.allProductsArray.push(new product('bubblegum', 'assets/bubblegum.jpg'));
-product.allProductsArray.push(new product('chair', 'assets/chair.jpg'));
-product.allProductsArray.push(new product('cthulhu', 'assets/cthulhu.jpg'));
-product.allProductsArray.push(new product('dog-duck', 'assets/dog-duck.jpg'));
-product.allProductsArray.push(new product('dragon', 'assets/dragon.jpg'));
-product.allProductsArray.push(new product('pen', 'assets/pen.jpg'));
-product.allProductsArray.push(new product('pet-sweep', 'assets/pet-sweep.jpg'));
-product.allProductsArray.push(new product('scissors', 'assets/scissors.jpg'));
-product.allProductsArray.push(new product('shark', 'assets/shark.jpg'));
-product.allProductsArray.push(new product('sweep' , 'assets/sweep.png'));
-product.allProductsArray.push(new product('tauntaun', 'assets/tauntaun.jpg'));
-product.allProductsArray.push(new product('unicorn', 'assets/unicorn.jpg'));
-product.allProductsArray.push(new product('water-can', 'assets/water-can.jpg'));
-product.allProductsArray.push(new product('wine-glass', 'assets/wine-glass.jpg'));
+Product.allProductsArray.push(new Product('bag', 'assets/bag.jpg'));
+Product.allProductsArray.push(new Product('banana', 'assets/banana.jpg'));
+Product.allProductsArray.push(new Product('bathroom', 'assets/bathroom.jpg'));
+Product.allProductsArray.push(new Product('boots', 'assets/boots.jpg'));
+Product.allProductsArray.push(new Product('breakfast', 'assets/breakfast.jpg'));
+Product.allProductsArray.push(new Product('bubblegum', 'assets/bubblegum.jpg'));
+Product.allProductsArray.push(new Product('chair', 'assets/chair.jpg'));
+Product.allProductsArray.push(new Product('cthulhu', 'assets/cthulhu.jpg'));
+Product.allProductsArray.push(new Product('dog-duck', 'assets/dog-duck.jpg'));
+Product.allProductsArray.push(new Product('dragon', 'assets/dragon.jpg'));
+Product.allProductsArray.push(new Product('pen', 'assets/pen.jpg'));
+Product.allProductsArray.push(new Product('pet-sweep', 'assets/pet-sweep.jpg'));
+Product.allProductsArray.push(new Product('scissors', 'assets/scissors.jpg'));
+Product.allProductsArray.push(new Product('shark', 'assets/shark.jpg'));
+Product.allProductsArray.push(new Product('sweep' , 'assets/sweep.png'));
+Product.allProductsArray.push(new Product('tauntaun', 'assets/tauntaun.jpg'));
+Product.allProductsArray.push(new Product('unicorn', 'assets/unicorn.jpg'));
+Product.allProductsArray.push(new Product('water-can', 'assets/water-can.jpg'));
+Product.allProductsArray.push(new Product('wine-glass', 'assets/wine-glass.jpg'));
 
 randomObject();
