@@ -163,6 +163,10 @@ console.log(Product.allProductsArray)
   });
 }
 
+function storeProductLocally() {
+  const packedProducts = JSON.stringify(Product.allProductsArray)
+  localStorage.setItem('products', packedProducts)
+};
 
 function retrieveProductsLocally() {
   const packedProducts = localStorage.getItem('products');
@@ -200,10 +204,6 @@ function retrieveProductsLocally() {
   randomObject();
 };
 
-function storeProductLocally() {
-  const packedProducts = JSON.stringify(Product.allProductsArray)
-  localStorage.setItem('products', packedProducts)
-};
 
 
 //  --------------------------------------------------- Listeners -------------------------------------------------------------------------//
